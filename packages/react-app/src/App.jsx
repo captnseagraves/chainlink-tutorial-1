@@ -214,15 +214,23 @@ function App(props) {
                 and give you a form to interact with it locally
             */}
 
-            {/* <Contract
+            <Contract
               name="YourContract"
               signer={userProvider.getSigner()}
               provider={localProvider}
               address={address}
               blockExplorer={blockExplorer}
-            /> */}
+            />
 
-            {/* <Contract
+            <Contract
+              name="PriceConsumerV3"
+              signer={userProvider.getSigner()}
+              provider={localProvider}
+              address={address}
+              blockExplorer={blockExplorer}
+            />
+
+            <Contract
               name="ApiConsumer"
               signer={userProvider.getSigner()}
               provider={localProvider}
@@ -236,7 +244,7 @@ function App(props) {
               provider={localProvider}
               address={address}
               blockExplorer={blockExplorer}
-            /> */}
+            />
 
             <Contract
               name="RandomNumberConsumer"

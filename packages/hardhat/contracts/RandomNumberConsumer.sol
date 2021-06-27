@@ -33,7 +33,7 @@ contract RandomNumberConsumer is VRFConsumerBase {
     /** 
      * Requests randomness from a user-provided seed
      */
-    function getRandomNumber(uint256 userProvidedSeed) public returns (bytes32 requestId) {
+    function getRandomRoll(uint256 userProvidedSeed) public returns (bytes32 requestId) {
         
         require(LINK.balanceOf(address(this)) >= fee, "Not enough LINK - fill contract with faucet");
 
@@ -51,10 +51,32 @@ contract RandomNumberConsumer is VRFConsumerBase {
         return requestId;
     }
 
+    /** 
+     * Requests randomness 
+     */
+    // function getRandomNumber() public returns (bytes32 requestId) {
+    //     require(LINK.balanceOf(address(this)) >= fee, "Not enough LINK - fill contract with faucet");
+    //     return requestRandomness(keyHash, fee);
+    // }
+
+
+    // It's possible to get multiple numbers from a single VRF response:
+    function expand(uint256 randomValue, uint256 n) public pure returns (uint256[] memory expandedValues) {
+        expandedValues = new uint256[](n);
+        for (uint256 i = 0; i < n; i++) {
+            expandedValues[i] = uint256(keccak256(abi.encode(randomValue, i)));
+        }
+    return expandedValues;
+}
+
+
     /**
      * Callback function used by VRF Coordinator
      */
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
         randomResult = randomness;
     }
+
+
+    function withdrawLink() external {} //- Implement a withdraw function to avoid locking your LINK in the contract
 }
